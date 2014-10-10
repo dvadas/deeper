@@ -1,0 +1,30 @@
+Deep neural network implementation using theano.
+
+Create a DeepNeuralNetwork object (from network.py) and then use it like an sklearn model, with fit(), score() and predict() methods.
+
+Features:
+    - AdaDelta optimisation
+    - pretraining with stacked de-noising autoencoders
+    - dropout
+    - regularisation with L1 and L2 loss
+
+Example construction:
+
+from deeper.layer import rectifiedLinearUnit, linear
+from deeper.network import DeepNeuralNetwork
+
+if small:
+    hiddenLayers = 2
+    hiddenLayerSize = 200
+else:
+    hiddenLayers = 3
+    hiddenLayerSize = 1500
+
+layerSizes = ([hiddenLayerSize] * hiddenLayers) + [numOutputs]
+activationFunctions = ([rectifiedLinearUnit] * hiddenLayers) + [linear]
+noiseRates = [0.1] * hiddenLayers
+dropoutRates = [0.0] + [0.5] * hiddenLayers
+
+model = DeepNeuralNetwork(numInputs, layerSizes, activationFunctions,
+            noiseRates=noiseRates, dropoutRates=dropoutRates)
+
